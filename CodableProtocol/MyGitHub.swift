@@ -16,7 +16,8 @@ struct MyGitHub : Codable{
     let avatarUrl: URL?
     let repos: Int?
     
-    private enum GitKeys : String,CodingKey {
+    
+    private enum CodingKeys : String,CodingKey {
         case name
         case location
         case followers

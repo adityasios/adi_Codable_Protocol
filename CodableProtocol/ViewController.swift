@@ -12,14 +12,29 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        guard let gitUrl = URL(string: "https://api.github.com/users/shashikant86") else {
+            return
+        }
+        
+        
+        URLSession.shared.dataTask(with: gitUrl) { (data, response, error) in
+            guard let dataGet = data else { return }
+            do {
+                let decoder = JSONDecoder()
+                let gitData = try decoder.decode(MyGitHub.self, from: dataGet)
+                if gitData.avatarUrl != nil {
+                    print(gitData.avatarUrl!)
+                }
+                }catch{
+                print("Err \(error)")
+            }
+        }.resume()
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
 
 }
+
 
